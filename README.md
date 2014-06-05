@@ -35,3 +35,8 @@ When the form inside index.php is submitted, the filter field is used to constru
 For easier reading, initially the result set is only displayed with the record's full name ("displayname") field, along with two buttons.  The button on the left opens and closes the record for viewing.  The button on the right initiates the downloading of a vCard populated with some subset of the record's details. The record details, as displayed, are labeled with the raw property names as they come from the directory service.
 
 Each vCard is prefabricated upon page load and hidden within the DOM container that holds its analogous, displayable version of the record.  So, instead of going back to the directory.ucsf.edu service, the vCard button triggers some Javascript which grabs that prefaricated vCard data and then turns it into a file stream. The browser sees the stream as a downloadable vCard file. The resulting vCard files have been tested to successfully load into GMail and OSX's native "Contact" application.
+
+Notes on The Code
+======================================
+
+The section above describes most of what's going on within "index.php". The UCSFDirectory class represents a connection to directory.ucsf.edu with the ability to query the service.  The Person class represents the invidual records as returned from UCSFDirectory. Both of these classes are fully documented within their respective code.
