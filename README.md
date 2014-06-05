@@ -9,7 +9,7 @@ How To Install
 
 1. Clone this repository.
 
-$ git clone git@github.com:jasongabler/vCard.git
+$ git clone https://github.com/jasongabler/vCard.git
 
 The local repository will be created in a directory named "vCard"
 within the current working directory.
