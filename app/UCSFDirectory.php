@@ -51,18 +51,5 @@ class UCSFDirectory {
     }
 
 }
-
-function d($str, $ret = FALSE, $die = FALSE) {
-    $output = print_r($str, TRUE);
-    if ($ret) {
-        return $output;
-    }
-    print '<div class="debug"><pre>' . $output . '</pre></div>';
-    if ($die) {
-        exit();
-    }
-}
-
-
  
 ?>
