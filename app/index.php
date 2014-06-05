@@ -23,7 +23,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>UCSF vCard Service</title>
-
     <!-- JQUERY -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>    
     <!-- BOOTSTRAP -->
@@ -81,12 +80,11 @@
                 <?php endif; ?>
             <?php else: // empty people ?>
                 <h4>Your search returned <?php print count($people) ?> results.</h4>
-                <?php foreach ($people as $person): 
-                    $displayname = $person->get('displayname'); ?>
+                <?php foreach ($people as $person): ?>
                     <div class="person">
                         <div class="person-vcard" style="display:none;"><?php print $person->vCard() ?></div>
                         <div class="person-header row">
-                            <div class="person-header-name col-md-3"><?php print $displayname ?></div>
+                            <div class="person-header-name col-md-3"><?php print $person->get('displayname'); ?></div>
                             <div class="col-md-2">
                                 <button class="btn btn-secondary person-view-btn">
                                     <i class="glyphicon glyphicon-eye-open"></i>
@@ -94,7 +92,7 @@
                                 </button>
                             </div>
                             <div class="col-md-2">
-                                <button class="btn btn-secondary person-vcard-btn" data-fn="<?php print $displayname ?>">
+                                <button class="btn btn-secondary person-vcard-btn" data-fn="<?php print $person->get('displayname'); ?>">
                                     <i class="glyphicon glyphicon-download"></i>
                                     Download vCard
                                 </button>
@@ -104,7 +102,7 @@
                             <div class="container">
                                 <?php foreach ($person->keys() as $key): ?>
                                     <div class="row">
-                                        <div class="field-name col-md-3 col-md-offset-1"><label><?php print $key ?></label></div>
+                                        <div class="field-name col-md-5 col-md-offset-1"><label><?php print $key ?></label></div>
                                         <div class="field-value col-md-3"><?php print preg_replace('/[\r\n]/', '<br>', $person->get($key))  ?></div>
                                     </div>
                                 <?php endforeach; ?>                
@@ -121,6 +119,7 @@
     <script>
         $(function() {
             $('.person-view-btn').click(function() {
+                console.log('here....');
                 $(this).parents('.person').children('.person-content').toggle();
             });
 
@@ -133,9 +132,7 @@
                 download(vcard, filename, 'text/vcard');
             });            
             
-            /**
-             * Thank you, never-expiring pastebin.com page: http://pastebin.com/YZa4bZv9
-             */
+            // Convert data into a downloadable file stream  
             var download = function(content, filename, contentType){ 
                 if (!contentType) {
                     contentType = 'application/octet-stream';

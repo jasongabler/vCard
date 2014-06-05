@@ -11,6 +11,12 @@ class UCSFDirectory {
     
     private $urlString;
     
+    /**
+     * Create a UCSFDirectory with a base query URL. If it's not supplied
+     * use the build in base of 'https://directory.ucsf.edu/?q=%s&json'.
+     * 
+     * @param type $url 
+     */
     public function __construct($url = NULL) {
         if (empty($url)) {
             $this->urlString = self::DIRECTORY_URL_STR;

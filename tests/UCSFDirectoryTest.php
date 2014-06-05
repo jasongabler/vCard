@@ -3,13 +3,10 @@
 include_once('app/UCSFDirectory.php');
 
 /**
- * This isn't really a complete test. Generally I'd have a local copy of the
+ * This isn't really a well designed test. Generally I'd have a local copy of the
  * data service (like a db or the UCSF Directory site) within my development
- * environment. This way I could ensure that the test data would be consistent
- * for testing. For now, this is good enough.  However, were another 'Kevin' to 
- * be added to the UCSF Directory with a name that came before 'Kevin Dale'
- * the $multi test could fail. Or if the full name of the record was no longer
- * named 'displayname', and so on.
+ * environment. With this I could ensure that the test data would be consistent
+ * for testing. For now, this is good enough.  
  */
 class UCSFDirectoryTest extends PHPUnit_Framework_TestCase {
     
@@ -26,23 +23,21 @@ class UCSFDirectoryTest extends PHPUnit_Framework_TestCase {
         
         // Check empty results
         $zero = $d->query('thisisntanyonesname');
-        
         $this->assertEquals(0, count($zero));
         
         // Check single result
         $single = $d->query('Kevin Dale');
-        
         $this->assertEquals('Kevin Dale', $single[0]->get('displayname'));
-
         $this->assertEquals(1, count($single));        
         
-        // Check multiple results -- this will probably fail when the right
-        // record is added to the directory... it already has once.
+        // Check multiple results
         $multi = $d->query('Kevin');
-        
-        $this->assertEquals(117, count($multi));
-        
-        $this->assertEquals('Kevin Dale', $multi[24]->get('displayname'));
+        $this->assertGreaterThan(1, count($multi));
+        foreach ($multi as $record) {
+            // Yeah it might match on something else... but how many departments
+            // are named 'Kevin'?
+            $this->assertContains('Kevin', $record->get('displayname'));
+        }
         
         
     }
