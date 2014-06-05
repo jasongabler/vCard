@@ -32,10 +32,14 @@ class UCSFDirectory {
         if (!empty($filter)) {
             // Retrieve records from the directory
             $url = sprintf($this->urlString, urlencode($filter));
-            $records_json = file_get_contents($url);
+            $ch = curl_init($url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            $records_json = curl_exec($ch);
+            curl_close($ch);
             if ($records_json === FALSE) {
                 throw new Exception('Unable to contact directory service.');
             }
+            
             // Convert records to People objects
             $records = json_decode($records_json);
             foreach ($records->data as $record) {
